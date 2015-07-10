@@ -8,4 +8,15 @@ package com.skizware.money.tracker;
  * To change this template use File | Settings | File Templates.
  */
 public class MoneyTransaction {
+
+    private Double amount;
+
+    public MoneyTransaction(Double amount) {
+        this.amount = amount;
+    }
+
+    public Double getAmount(){
+        return amount;
+    }
+
 }
