@@ -1,7 +1,6 @@
 package com.skizware.money.tracker;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Hello world!
@@ -10,8 +9,9 @@ import java.util.List;
 public class MoneyTracker
 {
 
+    public static final String UNCATEGORIZED = "Uncategorized";
     private Double moneyForTheMonth;
-    private List<MoneyTransaction> moneyTransactions;
+    private Map<String,List<MoneyTransaction>> moneyTransactions;
 
     public MoneyTracker(Double moneyForTheMonth) {
         this.moneyForTheMonth = moneyForTheMonth;
@@ -22,19 +22,43 @@ public class MoneyTracker
     }
 
     public void addTransaction(MoneyTransaction moneyTransaction){
+
+        addTransaction(moneyTransaction, UNCATEGORIZED);
+    }
+
+    public void addTransaction(MoneyTransaction moneyTransaction, String category){
         if(moneyTransactions == null){
-            moneyTransactions = new ArrayList<MoneyTransaction>();
+            moneyTransactions = new HashMap<String, List<MoneyTransaction>>();
         }
 
-        moneyTransactions.add(moneyTransaction);
+        if(!moneyTransactions.containsKey(category)){
+            moneyTransactions.put(category, new LinkedList<MoneyTransaction>());
+        }
+
+        moneyTransactions.get(category).add(moneyTransaction);
+
     }
 
     public Double getTotalRemaining(){
         Double total = moneyForTheMonth;
-        for (MoneyTransaction moneyTransaction : moneyTransactions) {
-            total += moneyTransaction.getAmount();
+        for (List<MoneyTransaction> categoryTransactions : moneyTransactions.values()) {
+            for (MoneyTransaction transaction : categoryTransactions) {
+                total += transaction.getAmount();
+            }
+
         }
 
+        return total;
+    }
+
+    public Double getMoneySpentOn(String category){
+        Double total = 0D;
+        if(moneyTransactions.containsKey(category)){
+            for (MoneyTransaction transaction : moneyTransactions.get(category)) {
+                total += transaction.getAmount();
+            }
+
+        }
         return total;
     }
 
