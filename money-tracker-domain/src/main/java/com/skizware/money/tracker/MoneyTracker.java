@@ -12,31 +12,35 @@ public class MoneyTracker
     public static final String UNCATEGORIZED = "Uncategorized";
     private Double moneyForTheMonth;
     private Map<String,List<MoneyTransaction>> moneyTransactions;
+    private Date dateTimeCreated;
 
     public MoneyTracker(Double moneyForTheMonth) {
         this.moneyForTheMonth = moneyForTheMonth;
+        init();
+    }
+
+    private void init() {
+        moneyTransactions = new HashMap<String, List<MoneyTransaction>>();
+        dateTimeCreated = new Date();
     }
 
     public Double getMoneyForTheMonth() {
         return moneyForTheMonth;
     }
 
-    public void addTransaction(MoneyTransaction moneyTransaction){
+    public MoneyTracker addTransaction(Double transactionAmount){
 
-        addTransaction(moneyTransaction, UNCATEGORIZED);
+        addTransaction(transactionAmount, UNCATEGORIZED);
+        return this;
     }
 
-    public void addTransaction(MoneyTransaction moneyTransaction, String category){
-        if(moneyTransactions == null){
-            moneyTransactions = new HashMap<String, List<MoneyTransaction>>();
-        }
-
+    public MoneyTracker addTransaction(Double transactionAmount, String category){
         if(!moneyTransactions.containsKey(category)){
             moneyTransactions.put(category, new LinkedList<MoneyTransaction>());
         }
 
-        moneyTransactions.get(category).add(moneyTransaction);
-
+        moneyTransactions.get(category).add(new MoneyTransaction(transactionAmount));
+        return this;
     }
 
     public Double getTotalRemaining(){
@@ -60,6 +64,10 @@ public class MoneyTracker
 
         }
         return total;
+    }
+
+    public Date getDateTimeCreated() {
+        return dateTimeCreated;
     }
 
 
