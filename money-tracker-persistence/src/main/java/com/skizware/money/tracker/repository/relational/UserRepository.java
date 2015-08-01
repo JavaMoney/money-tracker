@@ -11,7 +11,9 @@ import com.skizware.user.User;
  */
 public interface UserRepository {
 
-    public Integer save(final User user);
+    Integer save(final User user);
 
-    public User findById(final Integer id);
+    User findById(final Integer id);
+
+    Integer findIdForUser(final User user);
 }

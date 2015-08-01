@@ -7,6 +7,7 @@ import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -19,6 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "PersistenceTests-config.xml")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class PersistenceTests extends TestCase {
 
     @Autowired
@@ -29,14 +31,18 @@ public class PersistenceTests extends TestCase {
     public void testAccountStorageAndRetrieval(){
         //Given a user
         //When I call save
-        //The record should be saved to the database
+        //The record should be saved to the database (Have an ID)
         User user = new User("test@test.com");
+
         Integer id = userRepository.save(user);
+        assertNotNull("ID should not be null as it should be saved to DB", id);
 
-        System.out.println(id);
-        //User retrievedUser = userRepository.findById(id);
+        User retrievedUser = userRepository.findById(id);
+        assertEquals("Retrieved user != saved user - emails do not match", user.getEmailAddress(), retrievedUser.getEmailAddress());
 
-        //assertEquals("Expected email address to match", "test@test.com", retrievedUser.getEmailAddress());
+        Integer retrievedUserId = userRepository.findIdForUser(user);
+        assertEquals("Incorrect user ID retrieved", id, retrievedUserId);
+
     }
 
     public void testStorage(){
