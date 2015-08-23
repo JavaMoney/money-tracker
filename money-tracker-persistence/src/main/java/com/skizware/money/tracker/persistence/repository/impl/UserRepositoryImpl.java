@@ -33,7 +33,6 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Integer save(final User user) {
-
         Integer userId = jdbcTemplate.update(String.format(SQL_USER_INSERT, user.getEmailAddress()));
 
         return userId;
@@ -44,7 +43,6 @@ public class UserRepositoryImpl implements UserRepository {
     public User findById(final Integer id) {
         User user = jdbcTemplate.queryForObject(String.format(SQL_QUERY_USER_BY_ID, id), new UserRowMapper());
 
-
         return user;
     }
 
@@ -53,15 +51,7 @@ public class UserRepositoryImpl implements UserRepository {
         User user = jdbcTemplate.queryForObject(String.format(SQL_FIND_USER_BY_EMAIL, emailAddress), new UserRowMapper());
         user.addAllMoneyTrackers(findUserMoneyTrackersByEmail(emailAddress).getMoneyTrackers());
 
-
         return user;
-    }
-
-    private class UserRowMapper implements RowMapper<User> {
-            @Override
-            public User mapRow(ResultSet resultSet, int i) throws SQLException {
-                return new User(resultSet.getString("EMAIL_ADDRESS"));
-            }
     }
 
     @Override
@@ -83,6 +73,12 @@ public class UserRepositoryImpl implements UserRepository {
         return mongoTemplate.findOne(findByEMailAddress, UserMoneyTrackers.class);
     }
 
+    private class UserRowMapper implements RowMapper<User> {
+        @Override
+        public User mapRow(ResultSet resultSet, int i) throws SQLException {
+            return new User(resultSet.getString("EMAIL_ADDRESS"));
+        }
+    }
 
 
 }
