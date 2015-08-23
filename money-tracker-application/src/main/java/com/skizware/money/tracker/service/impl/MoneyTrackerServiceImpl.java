@@ -1,9 +1,9 @@
-package skizware.money.tracker.service.impl;
+package com.skizware.money.tracker.service.impl;
 
 import com.skizware.money.tracker.domain.MoneyTracker;
 import com.skizware.money.tracker.persistence.repository.UserRepository;
 import com.skizware.user.User;
-import skizware.money.tracker.service.MoneyTrackerService;
+import com.skizware.money.tracker.service.MoneyTrackerService;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package skizware.money.tracker.service;
+package com.skizware.money.tracker.service;
 
 import com.skizware.money.tracker.domain.MoneyTracker;
 import com.skizware.user.User;

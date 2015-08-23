@@ -1,4 +1,4 @@
-package skizware.money.tracker.service;
+package com.skizware.money.tracker.service;
 
 import com.skizware.money.tracker.domain.MoneyTracker;
 import com.skizware.money.tracker.persistence.repository.UserRepository;
@@ -6,7 +6,7 @@ import com.skizware.user.User;
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.mockito.Mockito;
-import skizware.money.tracker.service.impl.MoneyTrackerServiceImpl;
+import com.skizware.money.tracker.service.impl.MoneyTrackerServiceImpl;
 
 import java.util.List;
 
