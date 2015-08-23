@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface MoneyTrackerService {
 
-    public User getUserAccount(final String emailAddress);
+    public User getUserByEmail(final String emailAddress);
 
     public User enrollUser(final String emailAddress);
 

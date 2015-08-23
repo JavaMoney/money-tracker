@@ -15,13 +15,13 @@ public class MoneyTrackerServiceImpl implements MoneyTrackerService {
     UserRepository userRepository;
 
     @Override
-    public User getUserAccount(final String email) {
+    public User getUserByEmail(final String email) {
         return userRepository.findByEmail(email);
     }
 
     @Override
     public User enrollUser(String emailAddress) {
-        User enrolledUser = getUserAccount(emailAddress);
+        User enrolledUser = getUserByEmail(emailAddress);
         if(enrolledUser == null){
             enrolledUser = new User(emailAddress);
             userRepository.save(enrolledUser);
@@ -32,7 +32,7 @@ public class MoneyTrackerServiceImpl implements MoneyTrackerService {
 
     @Override
     public List<MoneyTracker> createMoneyTracker(String emailAddress, Double initialTrackerAmount) {
-        User user = userRepository.findByEmail(emailAddress);
+        User user = getUserByEmail(emailAddress);
         MoneyTracker newMoneyTracker = new MoneyTracker(initialTrackerAmount);
         user.addMoneyTracker(newMoneyTracker);
 

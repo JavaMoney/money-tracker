@@ -42,7 +42,7 @@ public class MoneyTrackerServiceTest extends TestCase {
         Mockito.when(userRepository.findByEmail(Mockito.eq(TEST_EMAIL_1))).thenReturn(existingUser);
 
         //When the user is retrieved by email address
-        User retrievedUser = moneyTrackerService.getUserAccount(TEST_EMAIL_1);
+        User retrievedUser = moneyTrackerService.getUserByEmail(TEST_EMAIL_1);
 
         //The correct user and money tracker details should be returned
         assertEquals("Incorrect email address", TEST_EMAIL_1, retrievedUser.getEmailAddress());
