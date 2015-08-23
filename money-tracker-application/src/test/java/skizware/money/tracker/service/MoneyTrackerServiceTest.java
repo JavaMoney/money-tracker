@@ -9,11 +9,7 @@ import org.mockito.Mockito;
 import skizware.money.tracker.service.impl.MoneyTrackerServiceImpl;
 
 /**
- * Created with IntelliJ IDEA.
- * User: david.anderson
- * Date: 2015/08/23
- * Time: 8:51 PM
- * To change this template use File | Settings | File Templates.
+ * Tests for the application logic.
  */
 public class MoneyTrackerServiceTest extends TestCase {
 
