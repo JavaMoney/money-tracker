@@ -2,25 +2,23 @@ package com.skizware.user;
 
 import com.skizware.money.tracker.MoneyTracker;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
- * Created with IntelliJ IDEA.
- * User: david.anderson
- * Date: 2015/07/14
- * Time: 10:58 PM
- * To change this template use File | Settings | File Templates.
+ * User class - holds the list of money trackers this user has created, and is identified by their email address.
  */
 public class User {
 
     private final String emailAddress;
-    private Map<Date, MoneyTracker> moneyTrackers;
+    private List<MoneyTracker> moneyTrackers;
 
     public User(String emailAddress) {
         this.emailAddress = emailAddress;
+        init();
+    }
+
+    public void init(){
+        moneyTrackers = new ArrayList<MoneyTracker>();
     }
 
     public final String getEmailAddress() {
@@ -28,9 +26,14 @@ public class User {
     }
 
     public final void addMoneyTracker(final MoneyTracker moneyTracker) {
-        if (moneyTrackers == null) {
-            moneyTrackers = new TreeMap<Date, MoneyTracker>();
-        }
-        moneyTrackers.put(moneyTracker.getDateTimeCreated(), moneyTracker);
+        moneyTrackers.add(moneyTracker);
+    }
+
+    public final List<MoneyTracker> getMoneyTrackers(){
+        return moneyTrackers;
+    }
+
+    public final void addAllMoneyTrackers(final List<MoneyTracker> aMoneyTrackers){
+        moneyTrackers.addAll(aMoneyTrackers);
     }
 }

@@ -1,4 +1,4 @@
-package com.skizware.money.tracker.repository.relational;
+package com.skizware.money.tracker.repository;
 
 import com.skizware.user.User;
 
@@ -16,4 +16,6 @@ public interface UserRepository {
     User findById(final Integer id);
 
     Integer findIdForUser(final User user);
+
+    User findByEmail(final String emailAddress);
 }

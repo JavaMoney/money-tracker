@@ -6,8 +6,8 @@
     <artifactId>money.tracker</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <modules>
-        <module>money-tracker-persistence</module>
         <module>money-tracker-domain</module>
+        <module>money-tracker-persistence</module>
     </modules>
     <packaging>pom</packaging>
 

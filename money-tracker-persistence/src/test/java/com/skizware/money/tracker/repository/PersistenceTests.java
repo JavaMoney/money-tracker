@@ -1,7 +1,6 @@
 package com.skizware.money.tracker.repository;
 
 import com.skizware.money.tracker.MoneyTracker;
-import com.skizware.money.tracker.repository.relational.UserRepository;
 import com.skizware.user.User;
 import junit.framework.TestCase;
 import org.junit.Test;
@@ -20,7 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "PersistenceTests-config.xml")
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class PersistenceTests extends TestCase {
 
     @Autowired
@@ -45,12 +44,13 @@ public class PersistenceTests extends TestCase {
 
     }
 
+    @Test
     public void testStorage(){
         //Given a user
         //when the user saves a Money Tracker
         //Then the Money Tracker must be saved in the DB
         //And a reference to it should be stored against the user in the DB.
-        User user = new User("test@test.com");
+        User user = new User("test2@test.com");
         MoneyTracker moneyTracker = new MoneyTracker(5000D);
         moneyTracker.addTransaction(-100D, "Airtime")
                     .addTransaction(-250D, "Eating Out")
@@ -60,6 +60,13 @@ public class PersistenceTests extends TestCase {
         user.addMoneyTracker(moneyTracker);
 
         userRepository.save(user);
+
+        User retrievedUser = userRepository.findByEmail(user.getEmailAddress());
+
+        assertNotNull(retrievedUser);
+        assertNotNull("User should have a list of money trackers.", retrievedUser.getMoneyTrackers());
+        assertEquals("User should have 1 money tracker", 1, retrievedUser.getMoneyTrackers().size());
+        assertEquals(4150D, retrievedUser.getMoneyTrackers().get(0).getTotalRemaining());
     }
 
 }

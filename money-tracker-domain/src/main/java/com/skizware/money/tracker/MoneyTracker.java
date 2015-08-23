@@ -4,14 +4,12 @@ import java.util.*;
 
 /**
  * Hello world!
- *
  */
-public class MoneyTracker
-{
+public class MoneyTracker {
 
     public static final String UNCATEGORIZED = "Uncategorized";
     private Double moneyForTheMonth;
-    private Map<String,List<MoneyTransaction>> moneyTransactions;
+    private Map<String, List<MoneyTransaction>> moneyTransactions;
     private Date dateTimeCreated;
 
     public MoneyTracker(Double moneyForTheMonth) {
@@ -28,14 +26,13 @@ public class MoneyTracker
         return moneyForTheMonth;
     }
 
-    public MoneyTracker addTransaction(Double transactionAmount){
-
+    public MoneyTracker addTransaction(Double transactionAmount) {
         addTransaction(transactionAmount, UNCATEGORIZED);
         return this;
     }
 
-    public MoneyTracker addTransaction(Double transactionAmount, String category){
-        if(!moneyTransactions.containsKey(category)){
+    public MoneyTracker addTransaction(Double transactionAmount, String category) {
+        if (!moneyTransactions.containsKey(category)) {
             moneyTransactions.put(category, new LinkedList<MoneyTransaction>());
         }
 
@@ -43,25 +40,23 @@ public class MoneyTracker
         return this;
     }
 
-    public Double getTotalRemaining(){
+    public Double getTotalRemaining() {
         Double total = moneyForTheMonth;
         for (List<MoneyTransaction> categoryTransactions : moneyTransactions.values()) {
             for (MoneyTransaction transaction : categoryTransactions) {
                 total += transaction.getAmount();
             }
-
         }
 
         return total;
     }
 
-    public Double getMoneySpentOn(String category){
+    public Double getMoneySpentOn(String category) {
         Double total = 0D;
-        if(moneyTransactions.containsKey(category)){
+        if (moneyTransactions.containsKey(category)) {
             for (MoneyTransaction transaction : moneyTransactions.get(category)) {
                 total += transaction.getAmount();
             }
-
         }
         return total;
     }
