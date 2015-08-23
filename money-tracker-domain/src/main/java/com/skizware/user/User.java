@@ -1,6 +1,6 @@
 package com.skizware.user;
 
-import com.skizware.money.tracker.MoneyTracker;
+import com.skizware.money.tracker.domain.MoneyTracker;
 
 import java.util.*;
 
@@ -17,7 +17,7 @@ public class User {
         init();
     }
 
-    public void init(){
+    private void init(){
         moneyTrackers = new ArrayList<MoneyTracker>();
     }
 

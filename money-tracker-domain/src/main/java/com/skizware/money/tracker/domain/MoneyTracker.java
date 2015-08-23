@@ -1,4 +1,4 @@
-package com.skizware.money.tracker;
+package com.skizware.money.tracker.domain;
 
 import java.util.*;
 

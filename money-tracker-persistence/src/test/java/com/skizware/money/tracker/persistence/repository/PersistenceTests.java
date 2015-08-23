@@ -1,6 +1,6 @@
 package com.skizware.money.tracker.persistence.repository;
 
-import com.skizware.money.tracker.MoneyTracker;
+import com.skizware.money.tracker.domain.MoneyTracker;
 import com.skizware.user.User;
 import junit.framework.TestCase;
 import org.junit.Test;

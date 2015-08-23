@@ -1,5 +1,6 @@
 package com.skizware.money.tracker;
 
+import com.skizware.money.tracker.domain.MoneyTracker;
 import junit.framework.TestCase;
 import org.junit.Test;
 
