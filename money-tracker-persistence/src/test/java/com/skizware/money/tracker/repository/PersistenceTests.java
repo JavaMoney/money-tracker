@@ -35,9 +35,6 @@ public class PersistenceTests extends TestCase {
         User retrievedUser = userRepository.findById(id);
         assertEquals("Retrieved user != saved user - emails do not match", user.getEmailAddress(), retrievedUser.getEmailAddress());
 
-        Integer retrievedUserId = userRepository.findIdForUser(user);
-        assertEquals("Incorrect user ID retrieved", id, retrievedUserId);
-
     }
 
     @Test

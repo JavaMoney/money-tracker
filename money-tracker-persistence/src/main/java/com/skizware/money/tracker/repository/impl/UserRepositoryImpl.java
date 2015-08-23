@@ -49,11 +49,6 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Integer findIdForUser(final User user){
-        return jdbcTemplate.queryForObject(String.format(SQL_FIND_ID_FOR_USER_BY_EMAIL, user.getEmailAddress()), Integer.class);
-    }
-
-    @Override
     public User findByEmail(final String emailAddress){
         User user = jdbcTemplate.queryForObject(String.format(SQL_FIND_USER_BY_EMAIL, emailAddress), new UserRowMapper());
         user.addAllMoneyTrackers(findUserMoneyTrackersByEmail(emailAddress).getMoneyTrackers());

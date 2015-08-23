@@ -15,7 +15,5 @@ public interface UserRepository {
 
     User findById(final Integer id);
 
-    Integer findIdForUser(final User user);
-
     User findByEmail(final String emailAddress);
 }
