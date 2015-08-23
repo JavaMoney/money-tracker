@@ -1,4 +1,4 @@
-package com.skizware.money.tracker.repository.model;
+package com.skizware.money.tracker.persistence.document;
 
 import com.skizware.money.tracker.MoneyTracker;
 import org.springframework.data.mongodb.core.mapping.Document;

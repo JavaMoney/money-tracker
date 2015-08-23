@@ -1,7 +1,7 @@
-package com.skizware.money.tracker.repository.impl;
+package com.skizware.money.tracker.persistence.repository.impl;
 
-import com.skizware.money.tracker.repository.UserRepository;
-import com.skizware.money.tracker.repository.model.UserMoneyTrackers;
+import com.skizware.money.tracker.persistence.repository.UserRepository;
+import com.skizware.money.tracker.persistence.document.UserMoneyTrackers;
 import com.skizware.user.User;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.BasicQuery;

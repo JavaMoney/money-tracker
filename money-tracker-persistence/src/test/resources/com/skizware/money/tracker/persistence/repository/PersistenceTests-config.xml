@@ -27,7 +27,7 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean id="userRepository" class="com.skizware.money.tracker.repository.impl.UserRepositoryImpl">
+    <bean id="userRepository" class="com.skizware.money.tracker.persistence.repository.impl.UserRepositoryImpl">
         <constructor-arg index="0" ref="jdbcTemplate"/>
         <constructor-arg index="1" ref="mongoTemplate"/>
     </bean>

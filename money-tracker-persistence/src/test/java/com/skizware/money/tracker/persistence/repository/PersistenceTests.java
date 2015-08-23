@@ -1,4 +1,4 @@
-package com.skizware.money.tracker.repository;
+package com.skizware.money.tracker.persistence.repository;
 
 import com.skizware.money.tracker.MoneyTracker;
 import com.skizware.user.User;
