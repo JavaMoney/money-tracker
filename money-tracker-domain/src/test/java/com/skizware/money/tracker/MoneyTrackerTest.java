@@ -1,8 +1,11 @@
 package com.skizware.money.tracker;
 
 import com.skizware.money.tracker.domain.MoneyTracker;
+import com.skizware.user.User;
 import junit.framework.TestCase;
 import org.junit.Test;
+
+import java.util.UUID;
 
 /**
  * In order to keep track of how much money I spend in a month
@@ -52,6 +55,28 @@ public class MoneyTrackerTest extends TestCase {
 
         //And the income category should have a total of 22
         assertEquals("Incorrect amount tracked for income received", 22D, moneyTracker.getMoneySpentOn("Income"));
+    }
+
+    @Test
+    public void testUserUUIDLookup_findsMatchingTracker(){
+        User user = new User("someEmail@test.com");
+        MoneyTracker moneyTracker = new MoneyTracker(5000D);
+        user.addMoneyTracker(moneyTracker);
+        UUID uuid = moneyTracker.getUuid();
+
+        moneyTracker = new MoneyTracker(700D);
+        user.addMoneyTracker(moneyTracker);
+
+        moneyTracker = new MoneyTracker(19D);
+        user.addMoneyTracker(moneyTracker);
+
+        moneyTracker = user.getMoneyTrackerByUUID(uuid);
+
+        assertNotNull(moneyTracker);
+        assertEquals(5000D, moneyTracker.getMoneyForTheMonth());
+
+        moneyTracker = user.getMoneyTrackerByUUID(UUID.randomUUID());
+        assertNull(moneyTracker);
     }
 
     private MoneyTracker createMoneyTrackerScenario(final Double initialCashAllowance, final Double... transactionAmounts) {

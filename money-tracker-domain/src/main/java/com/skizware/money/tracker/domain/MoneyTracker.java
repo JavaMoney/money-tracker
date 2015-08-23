@@ -8,12 +8,14 @@ import java.util.*;
 public class MoneyTracker {
 
     public static final String UNCATEGORIZED = "Uncategorized";
-    private Double moneyForTheMonth;
+    private final UUID uuid;
+    private final Double moneyForTheMonth;
     private Map<String, List<MoneyTransaction>> moneyTransactions;
     private Date dateTimeCreated;
 
     public MoneyTracker(Double moneyForTheMonth) {
         this.moneyForTheMonth = moneyForTheMonth;
+        this.uuid = UUID.randomUUID();
         init();
     }
 
@@ -65,5 +67,11 @@ public class MoneyTracker {
         return dateTimeCreated;
     }
 
+    public boolean matches(final UUID inputUUID){
+        return uuid.equals(inputUUID);
+    }
 
+    public UUID getUuid() {
+        return uuid;
+    }
 }

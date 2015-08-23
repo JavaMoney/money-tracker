@@ -33,6 +33,17 @@ public class User {
         return moneyTrackers;
     }
 
+    public final MoneyTracker getMoneyTrackerByUUID(final UUID uuid){
+        MoneyTracker matchingMoneyTracker = null;
+        Iterator it = moneyTrackers.iterator();
+        while(matchingMoneyTracker == null && it.hasNext()){
+            MoneyTracker moneyTracker = (MoneyTracker)it.next();
+            matchingMoneyTracker = moneyTracker.matches(uuid) ? moneyTracker : null;
+        }
+
+        return matchingMoneyTracker;
+    }
+
     public final void addAllMoneyTrackers(final List<MoneyTracker> aMoneyTrackers){
         moneyTrackers.addAll(aMoneyTrackers);
     }

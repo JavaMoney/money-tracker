@@ -64,6 +64,7 @@ public class PersistenceTests extends TestCase {
         assertEquals("Amount spent on eating out shoulda been -500", -500D, retrievedUser.getMoneyTrackers().get(0).getMoneySpentOn("Eating Out"));
         assertEquals("Amount spent on airtime shoulda been -100", -100D, retrievedUser.getMoneyTrackers().get(0).getMoneySpentOn("Airtime"));
         assertEquals("Amount spent on other shoulda been -250", -250D, retrievedUser.getMoneyTrackers().get(0).getMoneySpentOn("Other"));
+        assertEquals("UUIDs should match", moneyTracker.getUuid(), retrievedUser.getMoneyTrackers().get(0).getUuid());
 
         moneyTracker.addTransaction(-1000D, "Eating Out");
         userRepository.saveOrUpdateUserMoneyTrackers(user);
