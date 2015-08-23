@@ -20,7 +20,6 @@ public class UserRepositoryImpl implements UserRepository {
 
     public static final String SQL_USER_INSERT = "INSERT INTO USER (EMAIL_ADDRESS) VALUES ('%s')";
     public static final String SQL_QUERY_USER_BY_ID = "SELECT * FROM USER u WHERE u.id = %d";
-    public static final String SQL_FIND_ID_FOR_USER_BY_EMAIL = "SELECT id FROM USER WHERE EMAIL_ADDRESS = '%s'";
     public static final String SQL_FIND_USER_BY_EMAIL = "SELECT * FROM USER WHERE EMAIL_ADDRESS = '%s'";
     public static final String MONGO_MONEY_TRACKERS_BY_EMAIL = "{userEmailAddress: \"%s\"}";
     private final JdbcTemplate jdbcTemplate;
