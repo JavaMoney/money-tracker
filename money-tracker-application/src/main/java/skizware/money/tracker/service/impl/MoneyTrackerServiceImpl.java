@@ -1,15 +1,14 @@
 package skizware.money.tracker.service.impl;
 
+import com.skizware.money.tracker.domain.MoneyTracker;
 import com.skizware.money.tracker.persistence.repository.UserRepository;
 import com.skizware.user.User;
 import skizware.money.tracker.service.MoneyTrackerService;
 
+import java.util.List;
+
 /**
- * Created with IntelliJ IDEA.
- * User: david.anderson
- * Date: 2015/08/23
- * Time: 9:28 PM
- * To change this template use File | Settings | File Templates.
+ * Service for exposing operations for the money tracker application.
  */
 public class MoneyTrackerServiceImpl implements MoneyTrackerService {
 
@@ -29,6 +28,16 @@ public class MoneyTrackerServiceImpl implements MoneyTrackerService {
         }
 
         return enrolledUser;
+    }
+
+    @Override
+    public List<MoneyTracker> createMoneyTracker(String emailAddress, Double initialTrackerAmount) {
+        User user = userRepository.findByEmail(emailAddress);
+        MoneyTracker newMoneyTracker = new MoneyTracker(initialTrackerAmount);
+        user.addMoneyTracker(newMoneyTracker);
+
+        userRepository.saveOrUpdateUserMoneyTrackers(user);
+        return user.getMoneyTrackers();
     }
 
     public void setUserRepository(UserRepository userRepository) {
