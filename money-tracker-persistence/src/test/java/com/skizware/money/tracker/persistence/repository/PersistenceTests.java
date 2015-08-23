@@ -53,6 +53,7 @@ public class PersistenceTests extends TestCase {
         user.addMoneyTracker(moneyTracker);
 
         userRepository.save(user);
+        userRepository.saveOrUpdateUserMoneyTrackers(user);
 
         User retrievedUser = userRepository.findByEmail(user.getEmailAddress());
 
@@ -63,6 +64,12 @@ public class PersistenceTests extends TestCase {
         assertEquals("Amount spent on eating out shoulda been -500", -500D, retrievedUser.getMoneyTrackers().get(0).getMoneySpentOn("Eating Out"));
         assertEquals("Amount spent on airtime shoulda been -100", -100D, retrievedUser.getMoneyTrackers().get(0).getMoneySpentOn("Airtime"));
         assertEquals("Amount spent on other shoulda been -250", -250D, retrievedUser.getMoneyTrackers().get(0).getMoneySpentOn("Other"));
+
+        moneyTracker.addTransaction(-1000D, "Eating Out");
+        userRepository.saveOrUpdateUserMoneyTrackers(user);
+
+        retrievedUser = userRepository.findByEmail(user.getEmailAddress());
+        assertEquals("Amount spent on eating out shoulda been -1500", -1500D, retrievedUser.getMoneyTrackers().get(0).getMoneySpentOn("Eating Out"));
     }
 
 }

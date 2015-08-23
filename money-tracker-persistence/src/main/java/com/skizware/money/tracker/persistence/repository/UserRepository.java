@@ -16,4 +16,6 @@ public interface UserRepository {
     User findById(final Integer id);
 
     User findByEmail(final String emailAddress);
+
+    void saveOrUpdateUserMoneyTrackers(User user);
 }

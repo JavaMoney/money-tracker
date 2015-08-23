@@ -11,6 +11,8 @@ import java.util.List;
 @Document(collection = "userMoneyTrackers")
 public class UserMoneyTrackers {
 
+    public static final String FIELD_NAME_TRACKERS = "moneyTrackers";
+
     String userEmailAddress;
 
     List<MoneyTracker> moneyTrackers;

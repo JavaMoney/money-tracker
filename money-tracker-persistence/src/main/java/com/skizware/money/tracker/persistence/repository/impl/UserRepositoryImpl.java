@@ -6,6 +6,7 @@ import com.skizware.user.User;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -34,7 +35,6 @@ public class UserRepositoryImpl implements UserRepository {
     public Integer save(final User user) {
 
         Integer userId = jdbcTemplate.update(String.format(SQL_USER_INSERT, user.getEmailAddress()));
-        saveOrUpdateUserMoneyTrackers(user);
 
         return userId;
 
@@ -64,18 +64,21 @@ public class UserRepositoryImpl implements UserRepository {
             }
     }
 
-    private void saveOrUpdateUserMoneyTrackers(User user){
+    @Override
+    public void saveOrUpdateUserMoneyTrackers(final User user){
         UserMoneyTrackers userMoneyTrackers =  findUserMoneyTrackersByEmail(user.getEmailAddress());
         if(userMoneyTrackers == null){
             userMoneyTrackers = new UserMoneyTrackers(user.getEmailAddress(), user.getMoneyTrackers());
+            mongoTemplate.save(userMoneyTrackers);
         }else{
-            userMoneyTrackers.setMoneyTrackers(user.getMoneyTrackers());
+            Update moneyTrackersUpdate = new Update();
+            moneyTrackersUpdate.set(UserMoneyTrackers.FIELD_NAME_TRACKERS, user.getMoneyTrackers());
+            mongoTemplate.updateFirst(new BasicQuery(String.format(MONGO_MONEY_TRACKERS_BY_EMAIL, user.getEmailAddress())), moneyTrackersUpdate, UserMoneyTrackers.class);
         }
 
-        mongoTemplate.save(userMoneyTrackers);
     }
 
-    private UserMoneyTrackers findUserMoneyTrackersByEmail(String email){
+    private UserMoneyTrackers findUserMoneyTrackersByEmail(final String email){
         Query findByEMailAddress = new BasicQuery(String.format(MONGO_MONEY_TRACKERS_BY_EMAIL, email));
         return mongoTemplate.findOne(findByEMailAddress, UserMoneyTrackers.class);
     }
