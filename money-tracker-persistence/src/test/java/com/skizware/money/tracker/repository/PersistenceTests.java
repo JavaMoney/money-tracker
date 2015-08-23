@@ -11,11 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
- * Created with IntelliJ IDEA.
- * User: david.anderson
- * Date: 2015/07/13
- * Time: 9:26 PM
- * To change this template use File | Settings | File Templates.
+ * Integration test suite for testing persistence.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "PersistenceTests-config.xml")
@@ -67,6 +63,9 @@ public class PersistenceTests extends TestCase {
         assertNotNull("User should have a list of money trackers.", retrievedUser.getMoneyTrackers());
         assertEquals("User should have 1 money tracker", 1, retrievedUser.getMoneyTrackers().size());
         assertEquals(4150D, retrievedUser.getMoneyTrackers().get(0).getTotalRemaining());
+        assertEquals("Amount spent on eating out shoulda been -500", -500D, retrievedUser.getMoneyTrackers().get(0).getMoneySpentOn("Eating Out"));
+        assertEquals("Amount spent on airtime shoulda been -100", -100D, retrievedUser.getMoneyTrackers().get(0).getMoneySpentOn("Airtime"));
+        assertEquals("Amount spent on other shoulda been -250", -250D, retrievedUser.getMoneyTrackers().get(0).getMoneySpentOn("Other"));
     }
 
 }
