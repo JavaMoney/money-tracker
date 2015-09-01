@@ -18,6 +18,6 @@ public interface MoneyTrackerService {
 
     public User enrollUser(final String emailAddress);
 
-    public List<MoneyTracker> createMoneyTracker(final String emailAddress, final Double initialTrackerAmount);
+    public MoneyTracker createUserMoneyTracker(final String emailAddress, final Double initialTrackerAmount);
 
 }

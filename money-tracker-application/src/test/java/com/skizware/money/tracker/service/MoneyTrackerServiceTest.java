@@ -91,17 +91,19 @@ public class MoneyTrackerServiceTest extends TestCase {
 
         Mockito.reset(userRepository);
         Mockito.when(userRepository.findByEmail(Mockito.eq(user.getEmailAddress()))).thenReturn(user);
-        List<MoneyTracker> moneyTrackers = moneyTrackerService.createMoneyTracker(user.getEmailAddress(), 5000D);
-        assertNotNull(moneyTrackers);
-        assertEquals("First tracker created, list should have 1 tracker", 1, moneyTrackers.size());
+        MoneyTracker moneyTracker = moneyTrackerService.createUserMoneyTracker(user.getEmailAddress(), 5000D);
+        assertNotNull(moneyTracker);
+        assertEquals("First tracker created, list should have 1 tracker", 1, user.getMoneyTrackers().size());
+        assertEquals("Tracker should have 5000 money for the month", 5000D, moneyTracker.getMoneyForTheMonth());
         Mockito.verify(userRepository).findByEmail(user.getEmailAddress());
         Mockito.verify(userRepository).saveOrUpdateUserMoneyTrackers(user);
 
         Mockito.reset(userRepository);
         Mockito.when(userRepository.findByEmail(Mockito.eq(user.getEmailAddress()))).thenReturn(user);
-        moneyTrackers = moneyTrackerService.createMoneyTracker(user.getEmailAddress(), 7000D);
-        assertNotNull(moneyTrackers);
-        assertEquals("Second tracker created, list should have 2 trackers", 2, moneyTrackers.size());
+        moneyTracker = moneyTrackerService.createUserMoneyTracker(user.getEmailAddress(), 7000D);
+        assertNotNull(moneyTracker);
+        assertEquals("Second tracker created, list should have 2 trackers", 2, user.getMoneyTrackers().size());
+        assertEquals("Tracker should have 7000 money for the month", 7000D, moneyTracker.getMoneyForTheMonth());
         Mockito.verify(userRepository).findByEmail(user.getEmailAddress());
         Mockito.verify(userRepository).saveOrUpdateUserMoneyTrackers(user);
     }

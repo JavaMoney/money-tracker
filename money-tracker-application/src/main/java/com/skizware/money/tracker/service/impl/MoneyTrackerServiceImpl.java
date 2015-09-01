@@ -31,13 +31,13 @@ public class MoneyTrackerServiceImpl implements MoneyTrackerService {
     }
 
     @Override
-    public List<MoneyTracker> createMoneyTracker(String emailAddress, Double initialTrackerAmount) {
+    public MoneyTracker createUserMoneyTracker(String emailAddress, Double initialTrackerAmount) {
         User user = getUserByEmail(emailAddress);
         MoneyTracker newMoneyTracker = new MoneyTracker(initialTrackerAmount);
         user.addMoneyTracker(newMoneyTracker);
 
         userRepository.saveOrUpdateUserMoneyTrackers(user);
-        return user.getMoneyTrackers();
+        return newMoneyTracker;
     }
 
     public void setUserRepository(UserRepository userRepository) {
