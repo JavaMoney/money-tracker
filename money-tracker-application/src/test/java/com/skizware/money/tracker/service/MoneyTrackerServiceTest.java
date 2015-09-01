@@ -8,8 +8,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import com.skizware.money.tracker.service.impl.MoneyTrackerServiceImpl;
 
-import java.util.List;
-
 /**
  * Tests for the application logic.
  */

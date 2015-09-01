@@ -3,7 +3,6 @@ package com.skizware.money.tracker.service;
 import com.skizware.money.tracker.domain.MoneyTracker;
 import com.skizware.user.User;
 
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,5 +18,7 @@ public interface MoneyTrackerService {
     public User enrollUser(final String emailAddress);
 
     public MoneyTracker createUserMoneyTracker(final String emailAddress, final Double initialTrackerAmount);
+
+    public void updateUserMoneyTrackers(User user);
 
 }

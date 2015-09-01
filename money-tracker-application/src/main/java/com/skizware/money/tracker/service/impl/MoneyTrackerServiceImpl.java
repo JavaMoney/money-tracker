@@ -40,6 +40,11 @@ public class MoneyTrackerServiceImpl implements MoneyTrackerService {
         return newMoneyTracker;
     }
 
+    @Override
+    public void updateUserMoneyTrackers(User user) {
+        userRepository.saveOrUpdateUserMoneyTrackers(user);
+    }
+
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
