@@ -17,7 +17,7 @@ public interface MoneyTrackerService {
 
     public User enrollUser(final String emailAddress);
 
-    public MoneyTracker createUserMoneyTracker(final String emailAddress, final Double initialTrackerAmount);
+    public MoneyTracker createUserMoneyTracker(final User user, final Double initialTrackerAmount);
 
     public void updateUserMoneyTrackers(User user);
 

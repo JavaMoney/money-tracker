@@ -31,8 +31,7 @@ public class MoneyTrackerServiceImpl implements MoneyTrackerService {
     }
 
     @Override
-    public MoneyTracker createUserMoneyTracker(String emailAddress, Double initialTrackerAmount) {
-        User user = getUserByEmail(emailAddress);
+    public MoneyTracker createUserMoneyTracker(User user, Double initialTrackerAmount) {
         MoneyTracker newMoneyTracker = new MoneyTracker(initialTrackerAmount);
         user.addMoneyTracker(newMoneyTracker);
 

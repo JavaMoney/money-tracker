@@ -8,10 +8,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>skizware.money-tracker</groupId>
-    <artifactId>money-tracker-persistence</artifactId>
+    <artifactId>money-tracker-test-config</artifactId>
     <packaging>jar</packaging>
 
-    <name>money-tracker-persistence</name>
+    <name>money-tracker-test-config</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -19,63 +19,28 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-        </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>skizware.money-tracker</groupId>
-            <artifactId>money-tracker-domain</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+        </dependency>-->
         <!-- Spring JDBC -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-        </dependency>
-
-        <!-- mongodb java driver -->
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
         </dependency>
         <!-- Spring data mongodb -->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-mongodb</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>com.github.fakemongo</groupId>
             <artifactId>fongo</artifactId>
-            <scope>test</scope>
         </dependency>
         <!-- H2 DB -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>skizware.money-tracker</groupId>
-            <artifactId>money-tracker-test-config</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

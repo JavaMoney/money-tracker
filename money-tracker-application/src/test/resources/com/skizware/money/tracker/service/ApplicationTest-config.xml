@@ -13,5 +13,8 @@
         <constructor-arg index="1" ref="mongoTemplate"/>
     </bean>
 
+    <bean id="moneyTrackerService" class="com.skizware.money.tracker.service.impl.MoneyTrackerServiceImpl">
+        <property name="userRepository" ref="userRepository"/>
+    </bean>
 
 </beans>

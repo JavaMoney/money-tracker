@@ -3,6 +3,8 @@ package com.skizware.money.tracker.persistence.repository.impl;
 import com.skizware.money.tracker.persistence.repository.UserRepository;
 import com.skizware.money.tracker.persistence.document.UserMoneyTrackers;
 import com.skizware.user.User;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Query;
@@ -47,8 +49,17 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findByEmail(final String emailAddress){
-        User user = jdbcTemplate.queryForObject(String.format(SQL_FIND_USER_BY_EMAIL, emailAddress), new UserRowMapper());
-        user.addAllMoneyTrackers(findUserMoneyTrackersByEmail(emailAddress).getMoneyTrackers());
+        User user;
+        try {
+            user = jdbcTemplate.queryForObject(String.format(SQL_FIND_USER_BY_EMAIL, emailAddress), new UserRowMapper());
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
+
+        UserMoneyTrackers userMoneyTrackers = findUserMoneyTrackersByEmail(emailAddress);
+        if(userMoneyTrackers != null){
+            user.addAllMoneyTrackers(findUserMoneyTrackersByEmail(emailAddress).getMoneyTrackers());
+        }
 
         return user;
     }
