@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>skizware</groupId>
-    <artifactId>money.tracker</artifactId>
+    <artifactId>money-tracker</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <modules>
         <module>money-tracker-domain</module>
@@ -12,7 +12,7 @@
     </modules>
     <packaging>pom</packaging>
 
-    <name>money.tracker</name>
+    <name>money-tracker</name>
     <url>http://maven.apache.org</url>
 
     <properties>
