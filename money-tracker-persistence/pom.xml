@@ -69,7 +69,6 @@
             <groupId>skizware.money-tracker</groupId>
             <artifactId>money-tracker-test-config</artifactId>
             <version>${project.version}</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
