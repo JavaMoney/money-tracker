@@ -63,6 +63,10 @@ public class MoneyTracker {
         return total;
     }
 
+    public Map<String, List<MoneyTransaction>> getTransactionHistory(){
+        return this.moneyTransactions;
+    }
+
     public Date getDateTimeCreated() {
         return dateTimeCreated;
     }

@@ -7,22 +7,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Controller to route enrollment requests.
  */
 @Controller
-@RequestMapping("/enroll")
-public class EnrollmentController {
+@RequestMapping("/login")
+public class LoginController {
 
     @Autowired
     private MoneyTrackerService moneyTrackerService;
 
     @RequestMapping(method = RequestMethod.GET)
-    @ResponseBody
-    public String getEnrollmentPage() {
-        return "Hello world";
+    public String getLoginPage() {
+        return "/WEB-INF/jsp/auth/login.jsp";
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public String postLogin(HttpServletRequest httpServletRequest, HttpSession httpSession){
+        User enrolledUser = moneyTrackerService.enrollUser(httpServletRequest.getParameter("emailAddress"));
+
+        httpSession.setAttribute("loggedInUser", enrolledUser);
+        return "redirect:/money-tracker";
     }
 
 }

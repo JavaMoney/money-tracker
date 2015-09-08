@@ -25,6 +25,7 @@
         <mongo.java.driver.version>3.0.3</mongo.java.driver.version>
         <h2.version>1.4.187</h2.version>
         <fongo.version>2.0.1</fongo.version>
+        <javax.version>3.1.0</javax.version>
     </properties>
 
 
@@ -74,6 +75,11 @@
                         <artifactId>spring-expression</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${javax.version}</version>
             </dependency>
             <!-- mongodb java driver -->
             <dependency>

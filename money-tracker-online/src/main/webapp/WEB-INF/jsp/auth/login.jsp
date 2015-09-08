@@ -5,5 +5,10 @@
 </head>
 <body>
 
+<form method="POST">
+    <input type="text" name="emailAddress"/>
+    <button type="submit" value="Enroll">Enroll</button>
+</form>
+
 </body>
 </html>
