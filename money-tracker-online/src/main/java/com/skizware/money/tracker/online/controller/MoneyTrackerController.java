@@ -59,6 +59,8 @@ public class MoneyTrackerController {
             moneyTracker.addTransaction(Double.parseDouble(request.getParameter("amount")));
         }
 
+        moneyTrackerService.updateUserMoneyTrackers(user);
+
         return "redirect:/money-tracker/" + moneyTracker.getUuid().toString();
     }
 
