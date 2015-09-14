@@ -36,7 +36,6 @@ public class MoneyTrackerController {
 
     @RequestMapping(value = "/{uuid}", method = RequestMethod.GET)
     public String getMoneyTrackerDetail(@PathVariable String uuid, Model model, HttpSession httpSession) {
-        System.out.println("UUID = " + uuid);
         model.addAttribute("tracker", ((User) httpSession.getAttribute("loggedInUser")).getMoneyTrackerByUUID(UUID.fromString(uuid)));
 
         return "/WEB-INF/jsp/money-tracker/detail.jsp";

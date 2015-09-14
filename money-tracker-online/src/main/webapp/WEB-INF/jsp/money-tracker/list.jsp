@@ -48,7 +48,7 @@
 
 
                     <div class="row">
-                        <div class="col-md-offset-8 col-md-2 push-top-hard">
+                        <div class="col-md-2 push-top-hard">
                             <a class="btn btn-default" href="<c:url value='/money-tracker/create'/>">New Tracker</a>
                         </div>
                     </div>
