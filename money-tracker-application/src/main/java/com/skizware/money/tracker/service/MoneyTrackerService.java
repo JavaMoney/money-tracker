@@ -1,5 +1,7 @@
 package com.skizware.money.tracker.service;
 
+import javax.money.MonetaryAmount;
+
 import com.skizware.money.tracker.domain.MoneyTracker;
 import com.skizware.user.User;
 
@@ -17,7 +19,7 @@ public interface MoneyTrackerService {
 
     public User enrollUser(final String emailAddress);
 
-    public MoneyTracker createUserMoneyTracker(final User user, final Double initialTrackerAmount);
+    public MoneyTracker createUserMoneyTracker(final User user, final MonetaryAmount initialTrackerAmount);
 
     public void updateUserMoneyTrackers(User user);
 

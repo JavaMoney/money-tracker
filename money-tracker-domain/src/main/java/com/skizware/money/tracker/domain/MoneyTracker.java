@@ -2,18 +2,24 @@ package com.skizware.money.tracker.domain;
 
 import java.util.*;
 
+import javax.money.CurrencyUnit;
+import javax.money.Monetary;
+import javax.money.MonetaryAmount;
+
+import org.javamoney.moneta.FastMoney;
+
 /**
  * Hello world!
  */
 public class MoneyTracker {
-
+	private static final CurrencyUnit TRACK_CURR = Monetary.getCurrency("EUR");
     public static final String UNCATEGORIZED = "Uncategorized";
     private final UUID uuid;
-    private final Double moneyForTheMonth;
+    private final MonetaryAmount moneyForTheMonth;
     private Map<String, List<MoneyTransaction>> moneyTransactions;
     private Date dateTimeCreated;
 
-    public MoneyTracker(Double moneyForTheMonth) {
+    public MoneyTracker(MonetaryAmount moneyForTheMonth) {
         this.moneyForTheMonth = moneyForTheMonth;
         this.uuid = UUID.randomUUID();
         init();
@@ -24,16 +30,16 @@ public class MoneyTracker {
         dateTimeCreated = new Date();
     }
 
-    public Double getMoneyForTheMonth() {
+    public MonetaryAmount getMoneyForTheMonth() {
         return moneyForTheMonth;
     }
 
-    public MoneyTracker addTransaction(Double transactionAmount) {
+    public MoneyTracker addTransaction(MonetaryAmount transactionAmount) {
         addTransaction(transactionAmount, UNCATEGORIZED);
         return this;
     }
 
-    public MoneyTracker addTransaction(Double transactionAmount, String category) {
+    public MoneyTracker addTransaction(MonetaryAmount transactionAmount, String category) {
         if (!moneyTransactions.containsKey(category)) {
             moneyTransactions.put(category, new LinkedList<MoneyTransaction>());
         }
@@ -42,22 +48,22 @@ public class MoneyTracker {
         return this;
     }
 
-    public Double getTotalRemaining() {
-        Double total = moneyForTheMonth;
+    public MonetaryAmount getTotalRemaining() {
+    	MonetaryAmount total = moneyForTheMonth;
         for (List<MoneyTransaction> categoryTransactions : moneyTransactions.values()) {
             for (MoneyTransaction transaction : categoryTransactions) {
-                total += transaction.getAmount();
+                total = total.add(transaction.getAmount());
             }
         }
 
         return total;
     }
 
-    public Double getMoneySpentOn(String category) {
-        Double total = 0D;
+    public MonetaryAmount getMoneySpentOn(String category) {
+    	MonetaryAmount total = FastMoney.of(0D, TRACK_CURR);
         if (moneyTransactions.containsKey(category)) {
             for (MoneyTransaction transaction : moneyTransactions.get(category)) {
-                total += transaction.getAmount();
+            	 total = total.add(transaction.getAmount());
             }
         }
         return total;

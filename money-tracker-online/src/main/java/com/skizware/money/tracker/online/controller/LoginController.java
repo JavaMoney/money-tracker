@@ -1,6 +1,5 @@
 package com.skizware.money.tracker.online.controller;
 
-import com.skizware.money.tracker.domain.MoneyTracker;
 import com.skizware.money.tracker.service.MoneyTrackerService;
 import com.skizware.user.User;
 import org.springframework.beans.factory.annotation.Autowired;

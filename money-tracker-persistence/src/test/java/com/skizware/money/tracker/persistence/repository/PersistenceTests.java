@@ -3,6 +3,12 @@ package com.skizware.money.tracker.persistence.repository;
 import com.skizware.money.tracker.domain.MoneyTracker;
 import com.skizware.user.User;
 import junit.framework.TestCase;
+
+import javax.money.CurrencyUnit;
+import javax.money.Monetary;
+import javax.money.MonetaryAmount;
+
+import org.javamoney.moneta.FastMoney;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +23,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations = "PersistenceTests-config.xml")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class PersistenceTests extends TestCase {
-
+	private static final CurrencyUnit TEST_CURRENCY = Monetary.getCurrency("EUR");
+	   
     @Autowired
     UserRepository userRepository;
 
@@ -44,11 +51,11 @@ public class PersistenceTests extends TestCase {
         //Then the Money Tracker must be saved in the DB
         //And a reference to it should be stored against the user in the DB.
         User user = new User("test2@test.com");
-        MoneyTracker moneyTracker = new MoneyTracker(5000D);
-        moneyTracker.addTransaction(-100D, "Airtime")
-                    .addTransaction(-250D, "Eating Out")
-                    .addTransaction(-250D, "Eating Out")
-                    .addTransaction(-250D, "Other");
+        MoneyTracker moneyTracker = new MoneyTracker(createMoney(5000D));
+        moneyTracker.addTransaction(createMoney(-100D), "Airtime")
+                    .addTransaction(createMoney(-250D), "Eating Out")
+                    .addTransaction(createMoney(-250D), "Eating Out")
+                    .addTransaction(createMoney(-250D), "Other");
 
         user.addMoneyTracker(moneyTracker);
 
@@ -59,18 +66,21 @@ public class PersistenceTests extends TestCase {
 
         assertNotNull(retrievedUser);
         assertNotNull("User should have a list of money trackers.", retrievedUser.getMoneyTrackers());
-        assertEquals("User should have 1 money tracker", 1, retrievedUser.getMoneyTrackers().size());
-        assertEquals(4150D, retrievedUser.getMoneyTrackers().get(0).getTotalRemaining());
-        assertEquals("Amount spent on eating out shoulda been -500", -500D, retrievedUser.getMoneyTrackers().get(0).getMoneySpentOn("Eating Out"));
-        assertEquals("Amount spent on airtime shoulda been -100", -100D, retrievedUser.getMoneyTrackers().get(0).getMoneySpentOn("Airtime"));
-        assertEquals("Amount spent on other shoulda been -250", -250D, retrievedUser.getMoneyTrackers().get(0).getMoneySpentOn("Other"));
+        assertEquals("User should have 1 money tracker", createMoney(1D), retrievedUser.getMoneyTrackers().size());
+        assertEquals(createMoney(4150D), retrievedUser.getMoneyTrackers().get(0).getTotalRemaining());
+        assertEquals("Amount spent on eating out shoulda been -500", createMoney(-500D), retrievedUser.getMoneyTrackers().get(0).getMoneySpentOn("Eating Out"));
+        assertEquals("Amount spent on airtime shoulda been -100", createMoney(-100D), retrievedUser.getMoneyTrackers().get(0).getMoneySpentOn("Airtime"));
+        assertEquals("Amount spent on other shoulda been -250", createMoney(-250D), retrievedUser.getMoneyTrackers().get(0).getMoneySpentOn("Other"));
         assertEquals("UUIDs should match", moneyTracker.getUuid(), retrievedUser.getMoneyTrackers().get(0).getUuid());
 
-        moneyTracker.addTransaction(-1000D, "Eating Out");
+        moneyTracker.addTransaction(createMoney(-1000D), "Eating Out");
         userRepository.saveOrUpdateUserMoneyTrackers(user);
 
         retrievedUser = userRepository.findByEmail(user.getEmailAddress());
         assertEquals("Amount spent on eating out shoulda been -1500", -1500D, retrievedUser.getMoneyTrackers().get(0).getMoneySpentOn("Eating Out"));
     }
-
+    
+    private MonetaryAmount createMoney(final Double number) {
+  	   return FastMoney.of(number, TEST_CURRENCY);
+     }
 }

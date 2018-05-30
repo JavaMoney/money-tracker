@@ -3,6 +3,8 @@ package com.skizware.money.tracker.online.controller;
 import com.skizware.money.tracker.domain.MoneyTracker;
 import com.skizware.money.tracker.service.MoneyTrackerService;
 import com.skizware.user.User;
+
+import org.javamoney.moneta.FastMoney;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.money.CurrencyUnit;
+import javax.money.Monetary;
+import javax.money.MonetaryAmount;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.UUID;
@@ -24,6 +29,7 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/money-tracker")
 public class MoneyTrackerController {
+	private static final CurrencyUnit TRACKER_CURR = Monetary.getCurrency("EUR");
 
     @Autowired
     MoneyTrackerService moneyTrackerService;
@@ -53,9 +59,9 @@ public class MoneyTrackerController {
         User user = (User) httpSession.getAttribute("loggedInUser");
         MoneyTracker moneyTracker = user.getMoneyTrackerByUUID(UUID.fromString(uuid));
         if (request.getParameter("category") != null && !"".equals(request.getParameter("category"))) {
-            moneyTracker.addTransaction(Double.parseDouble(request.getParameter("amount")), request.getParameter("category"));
+            moneyTracker.addTransaction(createMoney(Double.parseDouble(request.getParameter("amount"))), request.getParameter("category"));
         } else {
-            moneyTracker.addTransaction(Double.parseDouble(request.getParameter("amount")));
+            moneyTracker.addTransaction(createMoney(Double.parseDouble(request.getParameter("amount"))));
         }
 
         moneyTrackerService.updateUserMoneyTrackers(user);
@@ -71,8 +77,11 @@ public class MoneyTrackerController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String postCreateForm(HttpServletRequest request, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("loggedInUser");
-        MoneyTracker moneyTracker = moneyTrackerService.createUserMoneyTracker(user, Double.parseDouble(request.getParameter("startAmount")));
+        MoneyTracker moneyTracker = moneyTrackerService.createUserMoneyTracker(user, createMoney(Double.parseDouble(request.getParameter("startAmount"))));
         return "redirect:/money-tracker/" + moneyTracker.getUuid().toString();
     }
-
+    
+    private MonetaryAmount createMoney(final Double number) {
+ 	   return FastMoney.of(number, TRACKER_CURR);
+    }
 }

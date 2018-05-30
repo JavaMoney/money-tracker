@@ -1,5 +1,7 @@
 package com.skizware.money.tracker.domain;
 
+import javax.money.MonetaryAmount;
+
 /**
  * Created with IntelliJ IDEA.
  * User: david.anderson
@@ -9,13 +11,13 @@ package com.skizware.money.tracker.domain;
  */
 public class MoneyTransaction {
 
-    private Double amount;
+    private MonetaryAmount amount;
 
-    public MoneyTransaction(Double amount) {
+    public MoneyTransaction(MonetaryAmount amount) {
         this.amount = amount;
     }
 
-    public Double getAmount(){
+    public MonetaryAmount getAmount(){
         return amount;
     }
 

@@ -7,6 +7,8 @@ import com.skizware.money.tracker.service.MoneyTrackerService;
 
 import java.util.List;
 
+import javax.money.MonetaryAmount;
+
 /**
  * Service for exposing operations for the money tracker application.
  */
@@ -31,7 +33,7 @@ public class MoneyTrackerServiceImpl implements MoneyTrackerService {
     }
 
     @Override
-    public MoneyTracker createUserMoneyTracker(User user, Double initialTrackerAmount) {
+    public MoneyTracker createUserMoneyTracker(User user, MonetaryAmount initialTrackerAmount) {
         MoneyTracker newMoneyTracker = new MoneyTracker(initialTrackerAmount);
         user.addMoneyTracker(newMoneyTracker);
 
